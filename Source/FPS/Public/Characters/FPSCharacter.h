@@ -8,6 +8,7 @@
 #include "FPSCharacter.generated.h"
 
 
+struct FGameplayTag;
 class UCameraComponent;
 class USpringArmComponent;
 class UCombatComponent;
@@ -20,8 +21,10 @@ class FPS_API AFPSCharacter : public ACharacter, public IPlayerInterface
 
 public:
 	AFPSCharacter();
+	
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void PossessedBy(AController* NewController) override;
 	
 	/** PlayerInterface */
 	virtual FName GetWeaponAttachPoint_Implementation(const FGameplayTag& WeaponType) const override;
