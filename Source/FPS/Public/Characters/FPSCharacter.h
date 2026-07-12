@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Interfaces/PlayerInterface.h"
 #include "FPSCharacter.generated.h"
+
 
 class UCameraComponent;
 class USpringArmComponent;
@@ -12,7 +14,7 @@ class UCombatComponent;
 class UInputAction;
 
 UCLASS()
-class FPS_API AFPSCharacter : public ACharacter
+class FPS_API AFPSCharacter : public ACharacter, public IPlayerInterface
 {
 	GENERATED_BODY()
 
@@ -21,13 +23,14 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
+	/** PlayerInterface */
+	virtual FName GetWeaponAttachPoint_Implementation(const FGameplayTag& WeaponType) const override;
+	/** ~PlayerInterface */
+	
 protected:
 	virtual void BeginPlay() override;
 
 private:
-	
-	
-
 #pragma region 1st Person View
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USkeletalMeshComponent> Mesh1P;
