@@ -8,6 +8,7 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+class UCombatComponent;
 
 UCLASS()
 class FPS_API AFPSCharacter : public ACharacter
@@ -23,8 +24,11 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UCombatComponent> Combat;
 
-	// 1st person view (arms)
+#pragma region 1st Person View
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USkeletalMeshComponent> Mesh1P;
 	
@@ -33,6 +37,7 @@ private:
 	
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UCameraComponent> FirstPersonCamera;
+#pragma endregion
 	
 
 };

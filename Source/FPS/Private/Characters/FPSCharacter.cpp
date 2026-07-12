@@ -4,6 +4,7 @@
 #include "Characters/FPSCharacter.h"
 
 #include "Camera/CameraComponent.h"
+#include "Combat/CombatComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -37,6 +38,11 @@ AFPSCharacter::AFPSCharacter()
 	GetMesh()->bOwnerNoSee = true;
 	GetMesh()->bReceivesDecals = false;
 #pragma endregion
+#pragma region Combat Settings
+	Combat = CreateDefaultSubobject<UCombatComponent>("Combat");
+	Combat->SetIsReplicated(true);
+#pragma endregion
+	
 }
 
 void AFPSCharacter::BeginPlay()
