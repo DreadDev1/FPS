@@ -3,6 +3,7 @@
 
 #include "Characters/FPSCharacter.h"
 
+#include "EnhancedInputComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Combat/CombatComponent.h"
 #include "Components/SkeletalMeshComponent.h"
@@ -58,5 +59,48 @@ void AFPSCharacter::Tick(float DeltaTime)
 void AFPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	
+	UEnhancedInputComponent* FPSInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
+	
+	FPSInputComponent->BindAction(CycleWeaponAction, ETriggerEvent::Started, this, &ThisClass::Input_CycleWeapon);
+	FPSInputComponent->BindAction(FireWeaponAction, ETriggerEvent::Started, this, &ThisClass::Input_FireWeapon_Pressed);
+	FPSInputComponent->BindAction(FireWeaponAction, ETriggerEvent::Completed, this, &ThisClass::Input_FireWeapon_Released);
+	FPSInputComponent->BindAction(AimWeaponAction, ETriggerEvent::Started, this, &ThisClass::Input_Aim_Pressed);
+	FPSInputComponent->BindAction(AimWeaponAction, ETriggerEvent::Completed, this, &ThisClass::Input_Aim_Released);
+	FPSInputComponent->BindAction(ReloadWeaponAction, ETriggerEvent::Started, this, &ThisClass::Input_ReloadWeapon);
 }
+
+void AFPSCharacter::Input_CycleWeapon()
+{
+	Combat->Initiate_CycleWeapon();
+}
+
+void AFPSCharacter::Input_ReloadWeapon()
+{
+	Combat->Initiate_ReloadWeapon();
+}
+
+void AFPSCharacter::Input_FireWeapon_Pressed()
+{
+	Combat->Initiate_FireWeapon_Pressed();
+}
+
+void AFPSCharacter::Input_FireWeapon_Released()
+{
+	Combat->Initiate_FireWeapon_Released();
+}
+
+void AFPSCharacter::Input_Aim_Pressed()
+{
+	Combat->Initiate_Aim_Pressed();
+}
+
+void AFPSCharacter::Input_Aim_Released()
+{
+	Combat->Initiate_Aim_Released();
+}
+
+
+
+
 

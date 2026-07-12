@@ -9,6 +9,7 @@
 class UCameraComponent;
 class USpringArmComponent;
 class UCombatComponent;
+class UInputAction;
 
 UCLASS()
 class FPS_API AFPSCharacter : public ACharacter
@@ -25,8 +26,7 @@ protected:
 
 private:
 	
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UCombatComponent> Combat;
+	
 
 #pragma region 1st Person View
 	UPROPERTY(VisibleAnywhere)
@@ -39,5 +39,28 @@ private:
 	TObjectPtr<UCameraComponent> FirstPersonCamera;
 #pragma endregion
 	
+#pragma region Combat
+	void Input_CycleWeapon();
+	void Input_ReloadWeapon();
+	void Input_FireWeapon_Pressed();
+	void Input_FireWeapon_Released();
+	void Input_Aim_Pressed();
+	void Input_Aim_Released();
+	
+	UPROPERTY(VisibleAnywhere)
+    TObjectPtr<UCombatComponent> Combat;
+	
+	UPROPERTY(EditAnywhere, Category = "FPS|Input")
+	TObjectPtr<UInputAction> CycleWeaponAction;
+	
+	UPROPERTY(EditAnywhere, Category = "FPS|Input")
+	TObjectPtr<UInputAction> FireWeaponAction;
+	
+	UPROPERTY(EditAnywhere, Category = "FPS|Input")
+	TObjectPtr<UInputAction> ReloadWeaponAction;
+	
+	UPROPERTY(EditAnywhere, Category = "FPS|Input")
+	TObjectPtr<UInputAction> AimWeaponAction;
+#pragma endregion
 
 };
