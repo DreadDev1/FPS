@@ -7,8 +7,6 @@
 #include "Interfaces/PlayerInterface.h"
 #include "FPSCharacter.generated.h"
 
-
-struct FGameplayTag;
 class UCameraComponent;
 class USpringArmComponent;
 class UCombatComponent;
@@ -32,9 +30,11 @@ public:
 	virtual USkeletalMeshComponent* GetMesh3P_Implementation() const override;
 	/** ~PlayerInterface */
 	
-protected:
 	virtual void BeginPlay() override;
+	virtual void BeginDestroy() override;
 
+protected:
+	
 private:
 #pragma region 1st Person View
 	UPROPERTY(VisibleAnywhere)
