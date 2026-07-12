@@ -8,13 +8,14 @@
 #include "Combat/CombatComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Data/WeaponData.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
 AFPSCharacter::AFPSCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
-#pragma region Camera Settings
+
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
 	SpringArm->SetupAttachment(GetRootComponent());
 	SpringArm->TargetArmLength = 0.f;
@@ -25,8 +26,8 @@ AFPSCharacter::AFPSCharacter()
 	FirstPersonCamera = CreateDefaultSubobject<UCameraComponent>("FirstPersonCamera");
 	FirstPersonCamera->SetupAttachment(SpringArm);
 	FirstPersonCamera->bUsePawnControlRotation = false;
-#pragma endregion 
-#pragma region 1st Person View Settings
+
+
 	Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>("Mesh1P");
 	Mesh1P->SetupAttachment(FirstPersonCamera);
 	Mesh1P->bOnlyOwnerSee = true;
@@ -39,22 +40,21 @@ AFPSCharacter::AFPSCharacter()
 	GetMesh()->bOnlyOwnerSee = false;
 	GetMesh()->bOwnerNoSee = true;
 	GetMesh()->bReceivesDecals = false;
-#pragma endregion
-#pragma region Combat Settings
+	
 	Combat = CreateDefaultSubobject<UCombatComponent>("Combat");
 	Combat->SetIsReplicated(true);
-#pragma endregion
-	
 }
 
 void AFPSCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
 }
 
 void AFPSCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
 }
 
 void AFPSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -84,6 +84,16 @@ FName AFPSCharacter::GetWeaponAttachPoint_Implementation(const FGameplayTag& Wea
 {
 	checkf(Combat->WeaponData, TEXT("No Weapon Data Asset - Please fill out BP_FPSCharacter"));
 	return Combat->WeaponData->GripPoints.FindChecked(WeaponType);
+}
+
+USkeletalMeshComponent* AFPSCharacter::GetMesh1P_Implementation() const
+{
+	return Mesh1P;
+}
+
+USkeletalMeshComponent* AFPSCharacter::GetMesh3P_Implementation() const
+{
+	return GetMesh();
 }
 
 void AFPSCharacter::Input_CycleWeapon()

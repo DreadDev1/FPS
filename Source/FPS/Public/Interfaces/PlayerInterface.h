@@ -6,6 +6,7 @@
 #include "UObject/Interface.h"
 #include "PlayerInterface.generated.h"
 
+struct FGameplayTag;
 // This class does not need to be modified.
 UINTERFACE()
 class UPlayerInterface : public UInterface
@@ -26,4 +27,9 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	FName GetWeaponAttachPoint(const FGameplayTag& WeaponType) const;
 	
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	USkeletalMeshComponent* GetMesh1P() const;
+	
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	USkeletalMeshComponent* GetMesh3P() const;
 };

@@ -1,16 +1,22 @@
 ﻿
+
+
 #include "Combat/CombatComponent.h"
 
 #include "Engine/Engine.h"
+#include "GameFramework/Pawn.h"
 #include "Wepon/Weapon.h"
+
 
 UCombatComponent::UCombatComponent()
 {
-	
 	PrimaryComponentTick.bCanEverTick = true;
+	
+	
 }
 
-void UCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void UCombatComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
+	FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
@@ -54,6 +60,10 @@ void UCombatComponent::Initiate_Aim_Released()
 void UCombatComponent::SpawnInventory()
 {
 	AWeapon* NewWeapon = SpawnWeapon(DefaultWeaponClass);
+	if (IsValid(NewWeapon))
+	{
+		NewWeapon->AttachToOwningPawn();
+	}
 }
 
 void UCombatComponent::DestroyInventory()
