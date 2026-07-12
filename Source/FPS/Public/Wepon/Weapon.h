@@ -21,11 +21,11 @@ public:
 	
 	void AttachToOwningPawn() const;
 	
-protected:
-	virtual void BeginPlay() override;
-	
 	UPROPERTY(EditAnywhere, Category = "FPS|WeaponType")
 	FGameplayTag WeaponType;
+	
+protected:
+	virtual void BeginPlay() override;
 	
 private:
 		
