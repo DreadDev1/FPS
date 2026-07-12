@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "CombatComponent.generated.h"
 
+
 class UWeaponData;
 class AWeapon;
 
@@ -17,6 +18,7 @@ class FPS_API UCombatComponent : public UActorComponent
 public:
 	UCombatComponent();
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 
 	// Cycle to the next weapon in the inventory
 	void Initiate_CycleWeapon();
@@ -31,12 +33,15 @@ public:
 	
 	void SpawnInventory();
 	void DestroyInventory();
-	
 protected:
 	
 private:
+	
+	UPROPERTY(Transient, Replicated)
+	TArray<AWeapon*> Inventory;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "FPS|Weapon")
-	TSubclassOf<AWeapon> DefaultWeaponClass;
+	TArray<TSubclassOf<AWeapon>> DefaultWeaponClasses;
 
 	AWeapon* SpawnWeapon(TSubclassOf<AWeapon> WeaponClass) const;
 };
