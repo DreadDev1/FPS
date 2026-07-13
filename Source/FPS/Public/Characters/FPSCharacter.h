@@ -34,6 +34,8 @@ public:
 	virtual void BeginDestroy() override;
 
 protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "FPS|Combat")
+	TObjectPtr<UCombatComponent> Combat;
 	
 private:
 #pragma region 1st Person View
@@ -54,10 +56,7 @@ private:
 	void Input_FireWeapon_Released();
 	void Input_Aim_Pressed();
 	void Input_Aim_Released();
-	
-	UPROPERTY(VisibleAnywhere)
-    TObjectPtr<UCombatComponent> Combat;
-	
+		
 	UPROPERTY(EditAnywhere, Category = "FPS|Input")
 	TObjectPtr<UInputAction> CycleWeaponAction;
 	
